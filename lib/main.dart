@@ -1,3 +1,4 @@
+import 'transaction.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,6 +30,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<Transaction> tranactions = [
+    Transaction(
+      id: '1',
+      title: 'Big Tasty',
+      amount: 75,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: '2',
+      title: '50 Trident Gum',
+      amount: 25,
+      date: DateTime.now(),
+    )
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Container(
             width: double.infinity,
@@ -45,8 +62,55 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.cyan,
             ),
           ),
-          Card(
-            child: Text("List of data"),
+          Column(
+            children: tranactions.map((tx) {
+              return Card(
+                  child: Row(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 15,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.purple,
+                        width: 2,
+                      ),
+                    ),
+                    padding: EdgeInsets.all(15),
+                    child: Text(
+                      tx.amount.toString(),
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        tx.title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        tx.date.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ));
+            }).toList(),
           )
         ],
       ),
