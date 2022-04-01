@@ -1,5 +1,6 @@
 import 'transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Container(
             width: double.infinity,
@@ -60,6 +61,31 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("data"),
               elevation: 5,
               color: Colors.cyan,
+            ),
+          ),
+          Card(
+            elevation: 5,
+            child: Container(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Add Transaction'),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.purple),
+                      padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           Column(
@@ -80,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     padding: EdgeInsets.all(15),
                     child: Text(
-                      tx.amount.toString(),
+                      '\$${tx.amount}',
                       style: TextStyle(
                         color: Colors.purple,
                         fontSize: 20,
@@ -99,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       Text(
-                        tx.date.toString(),
+                        DateFormat.yMMMd().format(tx.date),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
