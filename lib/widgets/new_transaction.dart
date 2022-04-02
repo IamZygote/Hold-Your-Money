@@ -6,6 +6,17 @@ class NewTransaction extends StatelessWidget {
   final amountController = TextEditingController();
   final Function addTx;
 
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+      return;
+    }
+
+    addTx(enteredTitle, enteredAmount);
+  }
+
   NewTransaction(this.addTx);
   @override
   Widget build(BuildContext context) {
@@ -21,15 +32,18 @@ class NewTransaction extends StatelessWidget {
               //onChanged: (val) => titleTextString=val,
               //we use the bellow way (better)
               controller: titleController,
+              onSubmitted: (_) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) =>
+                  submitData(), //we have to take parameter here so we use (_) 3shan y5ras m3 enena mesh hnsta5dmo
             ),
             ElevatedButton(
               onPressed: () {
-                addTx(
-                    titleController.text, double.parse(amountController.text));
+                submitData();
               },
               child: Text('Add Transaction'),
               style: ButtonStyle(
