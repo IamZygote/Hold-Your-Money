@@ -35,20 +35,33 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-      ),
-      body: Column(
-        //mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            child: Card(
-              child: Text("data"),
-              elevation: 5,
-              color: Colors.cyan,
-            ),
-          ),
-          UserTransaction(),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add),
+          )
         ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              child: Card(
+                child: Text("data"),
+                elevation: 5,
+                color: Colors.cyan,
+              ),
+            ),
+            UserTransaction(),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
       ),
     );
   }
