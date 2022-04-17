@@ -54,7 +54,6 @@ class _NewTransactionState extends State<NewTransaction> {
               },
               child: Text('Add Transaction'),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.purple),
                 padding: MaterialStateProperty.all(EdgeInsets.all(10)),
               ),
             )
