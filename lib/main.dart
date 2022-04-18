@@ -1,3 +1,4 @@
+import './widgets/chart.dart';
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 import './models/transaction.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         textTheme: ThemeData.light().textTheme.copyWith(
               titleLarge: TextStyle(
                 fontFamily: 'OpenSans',
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -44,19 +45,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: '1',
-      title: 'Big Tasty',
-      amount: 75,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: '2',
-      title: '50 Trident Gum',
-      amount: 25,
-      date: DateTime.now(),
-    )
+    //Transaction(
+    //  id: '1',
+    //  title: 'Big Tasty',
+    //  amount: 75,
+    //  date: DateTime.now(),
+    //),
+    //Transaction(
+    //  id: '2',
+    //  title: '50 Trident Gum',
+    //  amount: 25,
+    //  date: DateTime.now(),
+    //)
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   void _addNewTrans(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -99,13 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text("data"),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_userTransactions),
           ],
         ),
