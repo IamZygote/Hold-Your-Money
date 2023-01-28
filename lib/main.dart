@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import './widgets/chart.dart';
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
@@ -10,12 +8,7 @@ import 'package:flutter/services.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight
-    ],
+    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   );
   runApp(const MyApp());
 }
@@ -70,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //  date: DateTime.now(),
     //)
   ];
-  bool _showChart = false;
+
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((tx) {
       return tx.date.isAfter(
@@ -116,8 +109,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Expenses APP'),
       actions: <Widget>[
@@ -127,53 +118,26 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ],
     );
-    final showTRXlist = Container(
-      height: (MediaQuery.of(context).size.height -
-              MediaQuery.of(context).padding.top -
-              appBar.preferredSize.height) *
-          0.7,
-      child: TransactionList(_userTransactions, _deleteTransaction),
-    );
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Show Chart"),
-                  Switch(
-                    value: _showChart,
-                    onChanged: (val) {
-                      setState(() {
-                        _showChart = val;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            if (!isLandscape)
-              Container(
-                height: (MediaQuery.of(context).size.height -
-                        MediaQuery.of(context).padding.top -
-                        appBar.preferredSize.height) *
-                    0.3,
-                child: Chart(_recentTransactions),
-              ),
-            if (!isLandscape) showTRXlist,
-            if (isLandscape)
-              _showChart
-                  ? Container(
-                      height: (MediaQuery.of(context).size.height -
-                              MediaQuery.of(context).padding.top -
-                              appBar.preferredSize.height) *
-                          0.7,
-                      child: Chart(_recentTransactions),
-                    )
-                  : showTRXlist,
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      appBar.preferredSize.height) *
+                  0.26,
+              child: Chart(_recentTransactions),
+            ),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      appBar.preferredSize.height) *
+                  0.74,
+              child: TransactionList(_userTransactions, _deleteTransaction),
+            ),
           ],
         ),
       ),
